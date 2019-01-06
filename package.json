@@ -1,6 +1,6 @@
 {
   "name": "ssb-autoinvite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This Scuttlebot plugin automatically uses an invite code  specified in the config file",
   "main": "index.js",
   "scripts": {
