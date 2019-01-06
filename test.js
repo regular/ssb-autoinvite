@@ -31,8 +31,9 @@ test('Call invite.accept if a code was specified', t => {
     autoinvite: 'code'
   })
   myTestSbot.invite = {
-    accept: code => {
+    accept: (code, cb) => {
       t.equal(code, 'code')
+      cb(null, {blah: true})
       t.pass()
       myTestSbot.close( ()=> t.end() )
     }
