@@ -1,20 +1,22 @@
 const pull = require('pull-stream')
-const debug = require('debug')('ssb-autoinvite')
+const Log = require('./log')
 
 exports.name = 'autoinvite'
 exports.version = require('./package.json').version
 exports.manifest = {}
 
 exports.init = function (ssb, config) {
+  const {error, warning, notice, info} = Log(ssb, exports.name)
+
   let code = config && config.autoinvite
   if (!code) {
-    debug('INFO: No autoinvite section in config')
+    notice('No autoinvite section in config')
     return {}
   }
-  debug('INFO: found invite code')
+  info('found invite code')
   ssb.whoami( (err, feed) => {
     if (err) {
-      debug('ERROR: whoami failed')
+      error('whoami failed')
       return {}
     }
     let doAccept = true
@@ -35,13 +37,13 @@ exports.init = function (ssb, config) {
       pull.onEnd( err => {
         if (err) throw err
         if (!doAccept) {
-          debug('INFO: Already knows about a pub')
+          info('Already knows about a pub')
           return
         }
-        debug('INFO: calling invite.accept')
+        notice('calling invite.accept')
         ssb.invite.accept(code, (err, results) => {
           if (err) return debug('ERROR: ' + err.message)
-          debug('INFO: invite accepted %o', results)
+          notice('invite accepted %o', results)
         })
       })
     )
