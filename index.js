@@ -42,7 +42,7 @@ exports.init = function (ssb, config) {
         }
         notice('calling invite.accept')
         ssb.invite.accept(code, (err, results) => {
-          if (err) return debug('ERROR: ' + err.message)
+          if (err) return error('invite.accept failed:' + err.message)
           notice('invite accepted %o', results)
         })
       })
