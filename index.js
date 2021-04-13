@@ -32,7 +32,7 @@ exports.init = function (ssb, config) {
     if (!code) {
       const msg = 'No autoinvite section in config'
       notice(msg)
-      return cb(new Error(msg))
+      return cb(null)
     }
     info('found invite code')
     ssb.whoami( (err, feed) => {
